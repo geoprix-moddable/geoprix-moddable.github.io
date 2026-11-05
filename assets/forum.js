@@ -180,6 +180,7 @@
           shape: "pill",
           text: "continue_with",
           logo_alignment: "center",
+          locale: "en",
           width: Math.min(360, Math.max(220, (box.clientWidth || 300))),
         });
       } catch (e) {
