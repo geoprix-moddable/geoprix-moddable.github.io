@@ -55,6 +55,32 @@
       h("div", { class: opts.bodyClass || "card-body" }, body));
   }
   function errorNote(msg) { return h("p", { class: "form-error" }, msg); }
+
+  // ---------- people: picture, name, badges ----------
+  const AUTHOR = "author:profiles(username, is_admin, is_modder, avatar_url, name_color)";
+  const isModderPlus = (p) => !!(p && (p.is_admin || p.is_modder));
+  const okColor = (c) => typeof c === "string" && /^#[0-9A-Fa-f]{6}$/.test(c);
+  const okAvatar = (u) => typeof u === "string" && u.startsWith(`${cfg.url}/storage/v1/object/public/avatars/`);
+  function avatar(p, size = "sm") {
+    if (p && isModderPlus(p) && okAvatar(p.avatar_url)) {
+      return h("img", { class: `avatar ${size}`, src: p.avatar_url, alt: "", loading: "lazy" });
+    }
+    const letter = p && p.username ? p.username[0].toUpperCase() : "?";
+    return h("span", { class: `avatar ${size} letter`, "aria-hidden": "true" }, letter);
+  }
+  function badges(p) {
+    if (!p) return null;
+    return [
+      p.is_admin ? h("span", { class: "badge gold" }, "Admin") : null,
+      p.is_modder ? h("span", { class: "badge" }, "Modder") : null,
+    ];
+  }
+  function nameLink(p) {
+    if (!p) return h("span", { class: "name" }, "deleted");
+    const a = h("a", { class: "name", href: `#/u/${encodeURIComponent(p.username)}` }, p.username);
+    if (isModderPlus(p) && okColor(p.name_color)) a.style.color = p.name_color;
+    return a;
+  }
   function friendly(err) {
     const m = (err && (err.message || err.error_description)) || String(err);
     if (/rate limit|Slow down/i.test(m)) return "Slow down: you can post 5 times a minute.";
@@ -83,7 +109,7 @@
     const { data: { session } } = await sb.auth.getSession();
     me = null;
     if (session) {
-      const { data } = await sb.from("profiles").select("id, username, is_admin, needs_username").eq("id", session.user.id).maybeSingle();
+      const { data } = await sb.from("profiles").select("id, username, is_admin, is_modder, needs_username, avatar_url, name_color").eq("id", session.user.id).maybeSingle();
       me = data || { id: session.user.id, username: "?", is_admin: false };
     }
     renderAccount();
@@ -195,8 +221,10 @@
   function renderAccount() {
     if (me) {
       account.replaceChildren(
-        h("span", { class: "caps who" }, "Signed in as ", h("strong", {}, me.username), me.is_admin ? h("span", { class: "badge" }, "Admin") : null),
-        h("button", { class: "pill grey small", onclick: () => sb.auth.signOut() }, "Sign out"));
+        h("span", { class: "caps who" }, avatar(me, "xs"), "Signed in as ", h("strong", {}, nameLink(me)), badges(me)),
+        h("span", { class: "account-actions" },
+          h("a", { class: "pill grey small", href: `#/u/${encodeURIComponent(me.username)}` }, "My profile"),
+          h("button", { class: "pill grey small", onclick: () => sb.auth.signOut() }, "Sign out")));
     } else {
       account.replaceChildren(
         h("span", { class: "who" }, "Sign in to post and reply."),
@@ -338,7 +366,8 @@
   function post(author, created, body, actions) {
     return h("article", { class: "post card" },
       h("div", { class: "post-bar" },
-        h("span", { class: "caps author" }, author || "deleted"),
+        avatar(author, "sm"),
+        h("span", { class: "author" }, nameLink(author), badges(author)),
         h("span", { class: "time" }, ago(created)),
         h("span", { class: "post-actions" }, actions)),
       h("div", { class: "post-body" }, body));
@@ -347,8 +376,8 @@
   async function showThread(id) {
     view.replaceChildren(h("p", { class: "loading caps" }, "Loading…"));
     const [{ data: t, error }, { data: replies, error: rErr }] = await Promise.all([
-      sb.from("threads").select("id, title, body, category, pinned, locked, created_at, author_id, author:profiles(username)").eq("id", id).maybeSingle(),
-      sb.from("replies").select("id, body, created_at, author_id, author:profiles(username)").eq("thread_id", id).order("created_at"),
+      sb.from("threads").select(`id, title, body, category, pinned, locked, created_at, author_id, ${AUTHOR}`).eq("id", id).maybeSingle(),
+      sb.from("replies").select(`id, body, created_at, author_id, ${AUTHOR}`).eq("thread_id", id).order("created_at"),
     ]);
     if (error || rErr || !t) {
       view.replaceChildren(card("Not found", h("p", {}, "This thread doesn't exist or was deleted. ", h("a", { href: "#/" }, "Back to the forum")), { off: true }));
@@ -382,9 +411,9 @@
       h("p", { class: "back" }, h("a", { href: "#/" }, "‹ Back to the forum")),
       head,
       h("h1", { class: "thread-h1" }, t.title),
-      post(t.author && t.author.username, t.created_at, t.body, threadActions),
+      post(t.author, t.created_at, t.body, threadActions),
       h("div", { class: "tag section-tag" }, `${replies.length} ${replies.length === 1 ? "reply" : "replies"}`),
-      ...replies.map((r) => post(r.author && r.author.username, r.created_at, r.body,
+      ...replies.map((r) => post(r.author, r.created_at, r.body,
         canMod(r.author_id) ? del("reply", () => sb.from("replies").delete().eq("id", r.id)) : null)),
     ];
 
@@ -443,10 +472,170 @@
     title.focus();
   }
 
+  // ---------- profiles ----------
+  const PROFILE_COLS = "id, username, is_admin, is_modder, bio, avatar_url, name_color, link, created_at";
+  const profileHref = (name) => `#/u/${encodeURIComponent(name)}`;
+
+  async function showProfile(username) {
+    view.replaceChildren(h("p", { class: "loading caps" }, "Loading…"));
+    const { data: p } = await sb.from("profiles").select(PROFILE_COLS).eq("username", username).maybeSingle();
+    if (!p) {
+      view.replaceChildren(card("Not found", h("p", {}, "No user with that name. ", h("a", { href: "#/" }, "Back to the forum")), { off: true }));
+      return;
+    }
+    const [tc, rc, recent] = await Promise.all([
+      sb.from("threads").select("id", { count: "exact", head: true }).eq("author_id", p.id),
+      sb.from("replies").select("id", { count: "exact", head: true }).eq("author_id", p.id),
+      sb.from("threads").select("id, title, category, created_at").eq("author_id", p.id).order("created_at", { ascending: false }).limit(5),
+    ]);
+    const posts = (tc.count || 0) + (rc.count || 0);
+    const mine = me && me.id === p.id;
+    const custom = isModderPlus(p);
+    const joined = new Date(p.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+    const info = [
+      h("div", { class: "profile-head" },
+        avatar(p, "lg"),
+        h("div", { class: "profile-id" },
+          h("h1", { class: "profile-name" }, nameLink(p)),
+          h("div", { class: "profile-badges" }, badges(p)),
+          h("small", {}, `Joined ${joined} · ${posts} ${posts === 1 ? "post" : "posts"}`))),
+    ];
+    if (custom && p.bio) info.push(h("p", { class: "profile-bio" }, p.bio));
+    if (custom && p.link && /^https:\/\//.test(p.link)) {
+      let host = p.link;
+      try { host = new URL(p.link).host; } catch (e) { /* keep raw */ }
+      info.push(h("p", { class: "profile-link" }, h("a", { href: p.link, target: "_blank", rel: "noopener noreferrer nofollow ugc" }, host)));
+    }
+    if (mine && !custom) info.push(h("p", { class: "rules" }, "Profile pictures, bios, colours and links are for Modders."));
+
+    const actions = [];
+    if (mine && custom) actions.push(h("a", { class: "pill small", href: "#/edit" }, "Edit profile"));
+    const err = h("div");
+    if (me && me.is_admin) {
+      const call = async (fn, args, ask) => {
+        if (ask && !confirm(ask)) return;
+        const { error } = await sb.rpc(fn, args);
+        if (error) err.replaceChildren(errorNote(friendly(error)));
+        else { if (mine) await loadMe(); route(); }
+      };
+      actions.push(
+        h("button", { class: `pill small${p.is_modder ? " grey" : ""}`, onclick: () => call("set_modder", { target_username: p.username, make_modder: !p.is_modder }) },
+          p.is_modder ? "Remove Modder" : "Give Modder"),
+        h("button", { class: "pill grey small", onclick: () => call("admin_clear_profile", { target_username: p.username }, `Clear ${p.username}'s picture, bio, colour and link?`) },
+          "Clear profile"));
+    }
+    if (actions.length) info.push(h("div", { class: "actions profile-actions" }, actions), err);
+
+    const list = recent.data && recent.data.length
+      ? h("div", { class: "rows" }, recent.data.map((t) =>
+          h("a", { class: "row thread-row", href: `#/t/${t.id}` },
+            h("span", { class: "label" }, h("span", { class: "thread-title" }, t.title), h("small", {}, `${catName(t.category)} · ${ago(t.created_at)}`)),
+            chev())))
+      : h("p", { class: "loading" }, "No threads yet.");
+
+    view.replaceChildren(
+      h("p", { class: "back" }, h("a", { href: "#/" }, "‹ Back to the forum")),
+      card("Profile", h("div", { class: "profile" }, info)),
+      h("div", { class: "tag section-tag" }, "Recent threads"),
+      list);
+  }
+
+  async function showEdit() {
+    if (!me) { openAuth("in"); location.hash = "#/"; return; }
+    if (!isModderPlus(me)) { location.hash = profileHref(me.username); return; }
+    view.replaceChildren(h("p", { class: "loading caps" }, "Loading…"));
+    const { data: p } = await sb.from("profiles").select(PROFILE_COLS).eq("id", me.id).maybeSingle();
+    if (!p) return;
+
+    let avatarUrl = p.avatar_url || "";
+    const preview = h("span", { class: "avatar-preview" });
+    const showPreview = () => preview.replaceChildren(avatar({ ...p, avatar_url: avatarUrl }, "lg"));
+    showPreview();
+
+    const err = h("div");
+    const file = h("input", { type: "file", accept: "image/png,image/jpeg,image/webp,image/gif" });
+    const removePic = h("button", { class: "pill grey small", type: "button", onclick: () => { avatarUrl = ""; file.value = ""; showPreview(); } }, "Remove picture");
+    file.addEventListener("change", () => {
+      const f = file.files[0];
+      err.replaceChildren();
+      if (!f) return showPreview();
+      if (f.size > 1024 * 1024) { err.replaceChildren(errorNote("Pictures can be at most 1 MB.")); file.value = ""; return showPreview(); }
+      preview.replaceChildren(h("img", { class: "avatar lg", src: URL.createObjectURL(f), alt: "" }));
+    });
+
+    const bio = h("textarea", { rows: 4, maxlength: 300, placeholder: "A few words about you and your mods" });
+    bio.value = p.bio || "";
+    const useColor = h("input", { type: "checkbox", checked: okColor(p.name_color) });
+    const color = h("input", { type: "color", value: okColor(p.name_color) ? p.name_color : "#3fe58c" });
+    color.addEventListener("input", () => { useColor.checked = true; });
+    const link = h("input", { type: "url", maxlength: 200, placeholder: "https://…", pattern: "https://.+" });
+    link.value = p.link || "";
+    const save = h("button", { class: "pill", type: "submit" }, "Save profile");
+    const back = profileHref(me.username);
+
+    view.replaceChildren(
+      h("p", { class: "back" }, h("a", { href: back }, "‹ Back to your profile")),
+      card("Edit profile", h("form", {
+        class: "forum-form",
+        onsubmit: async (e) => {
+          e.preventDefault();
+          err.replaceChildren();
+          save.disabled = true;
+          try {
+            const f = file.files[0];
+            if (f) {
+              const ext = { "image/png": "png", "image/jpeg": "jpg", "image/webp": "webp", "image/gif": "gif" }[f.type];
+              if (!ext) throw new Error("Use a PNG, JPG, WebP or GIF picture.");
+              const path = `${me.id}/avatar-${Date.now()}.${ext}`;
+              const up = await sb.storage.from("avatars").upload(path, f, { contentType: f.type, cacheControl: "31536000" });
+              if (up.error) throw up.error;
+              avatarUrl = sb.storage.from("avatars").getPublicUrl(path).data.publicUrl;
+            }
+            const { error } = await sb.rpc("update_my_profile", {
+              new_bio: bio.value,
+              new_avatar_url: avatarUrl,
+              new_name_color: useColor.checked ? color.value : "",
+              new_link: link.value.trim(),
+            });
+            if (error) throw error;
+            // tidy up pictures that are no longer used
+            const { data: files } = await sb.storage.from("avatars").list(me.id);
+            const keep = avatarUrl ? avatarUrl.split("/").pop() : null;
+            const old = (files || []).filter((x) => x.name !== keep).map((x) => `${me.id}/${x.name}`);
+            if (old.length) await sb.storage.from("avatars").remove(old);
+            await loadMe();
+            location.hash = back;
+          } catch (e2) {
+            err.replaceChildren(errorNote(friendly(e2)));
+          } finally {
+            save.disabled = false;
+          }
+        },
+      },
+        h("div", { class: "avatar-edit" }, preview,
+          h("div", { class: "avatar-edit-controls" },
+            h("label", {}, h("span", { class: "caps" }, "Profile picture"), file, h("small", {}, "PNG, JPG, WebP or GIF, up to 1 MB")),
+            removePic)),
+        h("label", {}, h("span", { class: "caps" }, "Bio"), bio, h("small", {}, "Up to 300 characters")),
+        h("div", { class: "color-row" },
+          h("label", { class: "check" }, useColor, h("span", {}, "Coloured name")),
+          color),
+        h("label", {}, h("span", { class: "caps" }, "Link"), link, h("small", {}, "One https:// link, like your GitHub or YouTube")),
+        h("p", { class: "rules" }, "Same rules as posts: nothing illegal or harmful."),
+        err,
+        h("div", { class: "actions" }, h("a", { class: "pill grey", href: back }, "Cancel"), save))));
+  }
+
   function route() {
     const parts = location.hash.replace(/^#\/?/, "").split("/");
     if (parts[0] === "t" && /^\d+$/.test(parts[1])) return showThread(parts[1]);
     if (parts[0] === "new") return showNew(parts[1]);
+    if (parts[0] === "u" && parts[1]) {
+      const name = decodeURIComponent(parts[1]);
+      if (/^[A-Za-z0-9_]{3,20}$/.test(name)) return showProfile(name);
+    }
+    if (parts[0] === "edit") return showEdit();
     if (parts[0] === "c" && CATEGORIES.some(([k]) => k === parts[1])) return showList(parts[1]);
     return showList(null);
   }

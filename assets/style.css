@@ -454,8 +454,52 @@ section + section { margin-top: 32px; }
 }
 .forum-account .badge { margin: 0 0 0 8px; }
 .badge.grey { background: linear-gradient(180deg, #6a6a6a, #3a3a3a); box-shadow: inset 0 1px 0 #8a8a8a; }
+.badge.gold { background: linear-gradient(180deg, #ffc65a, #d98a12); box-shadow: inset 0 1px 0 #ffe2a3; }
+.forum-account .who { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 0; }
+.forum-account .who .avatar { margin-right: 8px; }
+.account-actions { display: flex; gap: 8px; }
+a.name { color: var(--green-1); text-decoration: none; font-weight: 700; text-shadow: var(--hard-shadow); }
+a.name:hover { text-decoration: underline; }
+.post-bar .author .badge, .profile-badges .badge { margin: 0 0 0 8px; }
+.profile-badges .badge:first-child { margin-left: 0; }
+
+/* ---------- avatars + profiles ---------- */
+.avatar {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(180deg, #3a3a3a, #222);
+  border: 2px solid #000;
+  box-shadow: 0 0 0 1px #4a4a4a;
+  color: var(--text-2);
+  font-weight: 700;
+  text-shadow: var(--hard-shadow);
+}
+.avatar.xs { width: 26px; height: 26px; font-size: .75rem; }
+.avatar.sm { width: 30px; height: 30px; font-size: .85rem; }
+.avatar.lg { width: 96px; height: 96px; font-size: 2.4rem; }
+.profile { padding: 18px 16px; display: grid; gap: 14px; }
+.profile-head { display: flex; align-items: center; gap: 16px; }
+.profile-id { display: grid; gap: 4px; min-width: 0; }
+.profile-id small { color: var(--text-2); }
+.profile-name { margin: 0; font-size: clamp(1.4rem, 5vw, 1.9rem); line-height: 1.1; overflow-wrap: anywhere; }
+.profile-bio { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.profile-link { margin: 0; }
+.profile-link a { color: var(--green-1); font-weight: 700; overflow-wrap: anywhere; }
+.profile-actions { justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
+.avatar-edit { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.avatar-edit-controls { display: grid; gap: 10px; flex: 1; min-width: 200px; justify-items: start; }
+.color-row { display: flex; align-items: center; gap: 14px; }
+.forum-form label.check { display: flex; align-items: center; gap: 8px; }
+.forum-form label.check input { width: auto; box-shadow: none; }
+.forum-form input[type="color"] { width: 56px; height: 36px; padding: 2px; }
+.forum-form input[type="file"] { padding: 8px; }
 
 .thread-row { padding-top: 10px; padding-bottom: 10px; }
+.thread-row .label { display: grid; gap: 2px; min-width: 0; }
+.thread-row .label small { color: var(--text-2); }
 .thread-title { font-weight: 700; text-shadow: var(--hard-shadow); }
 
 .loading { color: var(--text-2); text-shadow: var(--hard-shadow); }
