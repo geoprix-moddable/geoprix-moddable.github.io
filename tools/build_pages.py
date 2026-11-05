@@ -73,7 +73,7 @@ def layout(title, desc, body, base="", scripts=""):
 
   <footer class="footer bar">
     <div class="footer-inner">
-      <span>© <span data-year></span> GeoPrix Moddable · <a href="{base}privacy.html">Privacy</a></span>
+      <span>© <span data-year></span> GeoPrix Moddable · <a href="{base}privacy.html">Privacy</a> · <a href="{base}terms.html">Terms</a></span>
       <span>Heading font: <a href="http://www.tupwanders.nl">Hokjesgeest</a> by Tup Wanders, <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY)</a></span>
     </div>
   </footer>
@@ -236,6 +236,59 @@ privacy = '''    <section>
       </div>
     </section>'''
 
+terms = f'''    <section>
+      <div class="tag section-tag">Terms</div>
+      <div class="card">
+        <div class="card-bar caps">Terms of service</div>
+        <div class="card-body prose">
+          <p class="muted">Last updated: 6 November 2026</p>
+
+          <h2 class="prose-h">About these terms</h2>
+          <p>These terms apply to the GeoPrix Moddable website (<strong>geoprix-moddable.github.io</strong>), its
+          downloads and its forum. By using them you agree to these terms. GeoPrix Moddable is a fan project and is
+          not made by or connected to the developer of GeoPrix.</p>
+
+          <h2 class="prose-h">The modified game</h2>
+          <p>The launcher download is a <strong>modified version</strong> of GeoPrix. The original game is available on the
+          <a href="{PLAY}">Google Play Store</a>. If you enjoy GeoPrix, please support its developer.</p>
+          <ul>
+            <li>It must <strong>never</strong> be used to get around limits set by the developer.</li>
+            <li>It must <strong>never</strong> be used to unlock features you would otherwise have to buy.</li>
+            <li>All GeoPrix Moddable mods must be ethical.</li>
+          </ul>
+          <p>The downloads are provided <strong>as is</strong>, without any warranty. You install and use them at your own risk.</p>
+
+          <h2 class="prose-h">Forum accounts</h2>
+          <ul>
+            <li>You must be at least 13 years old to create an account.</li>
+            <li>Keep your sign-in details safe. You're responsible for what's posted from your account.</li>
+            <li>One person, one account. Don't pretend to be someone else.</li>
+          </ul>
+
+          <h2 class="prose-h">Forum rules</h2>
+          <ul>
+            <li>Be kind. No harassment, hate, threats or spam.</li>
+            <li>No cheats, piracy, or ways around paid features, for GeoPrix or any other game or app.</li>
+            <li>No malware, and no links to files you don't know are safe.</li>
+            <li>No illegal content, and nothing that breaks someone else's copyright.</li>
+            <li>Don't post other people's private information.</li>
+          </ul>
+          <p>You keep the rights to what you post, but you let us show it on the forum. Posts are public.</p>
+
+          <h2 class="prose-h">Moderation</h2>
+          <p>Admins can edit, lock or delete posts and suspend or delete accounts that break these rules, without
+          notice.</p>
+
+          <h2 class="prose-h">Privacy</h2>
+          <p>How we handle your data is explained in our <a href="privacy.html">privacy policy</a>.</p>
+
+          <h2 class="prose-h">Changes</h2>
+          <p>We may update these terms. If we do, we'll change the date at the top of this page. Using the site after
+          a change means you accept the new terms.</p>
+        </div>
+      </div>
+    </section>'''
+
 notfound = '''    <section class="card">
       <div class="card-bar caps off">Error</div>
       <div class="empty">
@@ -249,6 +302,7 @@ files = {
  "index.html": layout("Home", "GeoPrix with a built-in mod loader. Drop in a .gpmod file and add new features to the game.", home),
  "mods.html": layout("Mods", "Mods for GeoPrix Moddable.", mods),
  "releases.html": layout("Releases", f"Download GeoPrix Moddable launcher v{REL['launcher']} for GeoPrix {REL['game']}.", releases),
+ "terms.html": layout("Terms", "Terms of service for GeoPrix Moddable, its downloads and its forum.", terms),
  "privacy.html": layout("Privacy", "Privacy policy for GeoPrix Moddable and its forum.", privacy),
  "forum.html": layout("Forum", "The GeoPrix Moddable community forum.", forum, scripts=FORUM_SCRIPTS),
  "404.html": layout("Page not found", "Page not found.", notfound, base="/"),
