@@ -29,9 +29,9 @@ WARNING_TEXT = f'''<p>This is a <strong>modified version</strong> of GeoPrix. Th
 
 CHEV ='<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.6 12 8 7.4 9.4 6l6 6-6 6L8 16.6z"/></svg>'
 
-PAGES = [("index", "Home"), ("mods", "Mods"), ("releases", "Releases")]
+PAGES = [("index", "Home"), ("mods", "Mods"), ("releases", "Releases"), ("forum", "Forum")]
 
-def layout(title, desc, body, base=""):
+def layout(title, desc, body, base="", scripts=""):
     def href(p): return (base or "./") if p == "index" else f"{base}{p}.html"
     a = f"{base}assets/"
     tags = "\n".join(f'        <a class="tag" href="{href(p)}" data-page="{p}">{n}</a>' for p, n in PAGES)
@@ -79,6 +79,7 @@ def layout(title, desc, body, base=""):
   </footer>
 
   <script src="{a}script.js?v={V}"></script>
+{scripts}
 </body>
 </html>
 '''
@@ -169,6 +170,17 @@ releases = f'''    <section>
       </div>
     </section>'''
 
+forum = '''    <section>
+      <div class="tag section-tag">Forum</div>
+      <div id="forum" class="forum">
+        <noscript><p>The forum needs JavaScript.</p></noscript>
+      </div>
+    </section>'''
+
+FORUM_SCRIPTS = f'''  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="assets/forum-config.js?v={V}"></script>
+  <script src="assets/forum.js?v={V}"></script>'''
+
 notfound = '''    <section class="card">
       <div class="card-bar caps off">Error</div>
       <div class="empty">
@@ -182,6 +194,7 @@ files = {
  "index.html": layout("Home", "GeoPrix with a built-in mod loader. Drop in a .gpmod file and add new features to the game.", home),
  "mods.html": layout("Mods", "Mods for GeoPrix Moddable.", mods),
  "releases.html": layout("Releases", f"Download GeoPrix Moddable launcher v{REL['launcher']} for GeoPrix {REL['game']}.", releases),
+ "forum.html": layout("Forum", "The GeoPrix Moddable community forum.", forum, scripts=FORUM_SCRIPTS),
  "404.html": layout("Page not found", "Page not found.", notfound, base="/"),
 }
 for name, html in files.items():
