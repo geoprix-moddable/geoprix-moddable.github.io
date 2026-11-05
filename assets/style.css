@@ -365,3 +365,48 @@ section + section { margin-top: 32px; }
 .hash { margin: 16px 0 0; color: var(--text-3); font-size: .8rem; overflow-wrap: anywhere; }
 .hash code { font-family: ui-monospace, Consolas, monospace; color: var(--text-2); }
 @media (min-width: 720px) { .release { padding: 28px 32px 32px; } }
+
+/* ---------- download warning ---------- */
+.warning {
+  margin: 0 0 20px;
+  padding: 14px 16px 6px 18px;
+  border: 1px solid var(--outline);
+  border-left: 6px solid var(--gold);
+  background:
+    repeating-linear-gradient(135deg, rgba(241, 170, 50, .06) 0 2px, transparent 2px 10px),
+    #1f1d19;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .6);
+}
+.warning-title { color: var(--gold); margin-bottom: 8px; font-size: .95rem; }
+.warning p, .confirm-body p { color: var(--text); }
+.warning ul, .confirm-body ul { margin: 0 0 10px; padding-left: 20px; }
+.warning li, .confirm-body li { margin-bottom: 4px; }
+.warning a, .confirm-body a { color: var(--green-1); }
+
+.card-bar.warn::before { background: linear-gradient(180deg, #ffc65a, var(--gold)); }
+
+/* ---------- confirm dialog ---------- */
+.confirm {
+  width: min(520px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  color: var(--text);
+  overflow: auto;
+}
+.confirm::backdrop { background: rgba(0, 0, 0, .7); }
+.confirm-body { padding: 18px 16px 20px; }
+.agree {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 18px;
+  padding: 12px 14px;
+  border: 1px solid var(--outline);
+  background: linear-gradient(180deg, var(--row-top), var(--row-mid) 50%, var(--row-bottom) 50%);
+  font-weight: 700;
+  cursor: pointer;
+  text-shadow: var(--hard-shadow);
+}
+.agree input { width: 20px; height: 20px; accent-color: var(--green-2); flex: none; }
+.confirm .actions { justify-content: flex-end; }
+.pill:disabled { filter: grayscale(1) brightness(.6); cursor: not-allowed; }

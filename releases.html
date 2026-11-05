@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202611052344">
+  <link rel="stylesheet" href="assets/style.css?v=202611052347">
 </head>
 <body>
   <header class="top bar">
@@ -51,11 +51,39 @@
             <div><dt>Size</dt><dd>44.1 MB</dd></div>
             <div><dt>Needs</dt><dd>Android 9 or newer, arm64</dd></div>
           </dl>
-          <a class="pill" href="https://github.com/geoprix-moddable/geoprix-moddable.github.io/releases/download/v0.9.0a-geoprix-3.3/GeoPrix_3.3_0.9.0a.xapk"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5 1.4-1.45 2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg>Download XAPK</a>
+          <div class="warning">
+            <div class="warning-title caps">Read before downloading</div>
+            <p>This is a <strong>modified version</strong> of GeoPrix. The original game is made by its developer and is available on the <a href="https://play.google.com/store/apps/details?id=com.jm.geoprix">Google Play Store</a>.</p>
+            <ul>
+              <li>It must <strong>never</strong> be used to get around limits set by the developer.</li>
+              <li>It must <strong>never</strong> be used to unlock features you would otherwise have to buy.</li>
+              <li>All GeoPrix Moddable mods must be ethical.</li>
+            </ul>
+            <p>If you enjoy GeoPrix, support the developer by getting it on Google Play.</p>
+          </div>
+          <a class="pill" href="https://github.com/geoprix-moddable/geoprix-moddable.github.io/releases/download/v0.9.0a-geoprix-3.3/GeoPrix_3.3_0.9.0a.xapk" data-confirm-download><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5 1.4-1.45 2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg>Download XAPK</a>
           <p class="hash">SHA-256: <code>60c09b66c3399d95629695a17f4b026529eb1955b9eb5e65fa872c320bb0d4d3</code></p>
         </div>
       </div>
     </section>
+
+    <dialog class="confirm card" id="download-confirm" aria-labelledby="confirm-title">
+      <div class="card-bar caps warn" id="confirm-title">Before you download</div>
+      <form method="dialog" class="confirm-body">
+        <p>This is a <strong>modified version</strong> of GeoPrix. The original game is made by its developer and is available on the <a href="https://play.google.com/store/apps/details?id=com.jm.geoprix">Google Play Store</a>.</p>
+            <ul>
+              <li>It must <strong>never</strong> be used to get around limits set by the developer.</li>
+              <li>It must <strong>never</strong> be used to unlock features you would otherwise have to buy.</li>
+              <li>All GeoPrix Moddable mods must be ethical.</li>
+            </ul>
+            <p>If you enjoy GeoPrix, support the developer by getting it on Google Play.</p>
+        <label class="agree"><input type="checkbox" id="confirm-agree"> I understand and agree to these rules</label>
+        <div class="actions">
+          <button class="pill grey" value="cancel">Cancel</button>
+          <button class="pill" value="ok" id="confirm-ok" disabled><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5 1.4-1.45 2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg>Download</button>
+        </div>
+      </form>
+    </dialog>
 
     <section>
       <div class="tag section-tag">Changes</div>
@@ -75,6 +103,6 @@
     </div>
   </footer>
 
-  <script src="assets/script.js?v=202611052344"></script>
+  <script src="assets/script.js?v=202611052347"></script>
 </body>
 </html>

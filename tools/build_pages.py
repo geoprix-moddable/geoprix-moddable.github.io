@@ -17,7 +17,17 @@ REL = dict(
     sha256="60c09b66c3399d95629695a17f4b026529eb1955b9eb5e65fa872c320bb0d4d3",
 )
 
-CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.6 12 8 7.4 9.4 6l6 6-6 6L8 16.6z"/></svg>'
+PLAY = "https://play.google.com/store/apps/details?id=com.jm.geoprix"
+
+WARNING_TEXT = f'''<p>This is a <strong>modified version</strong> of GeoPrix. The original game is made by its developer and is available on the <a href="{PLAY}">Google Play Store</a>.</p>
+            <ul>
+              <li>It must <strong>never</strong> be used to get around limits set by the developer.</li>
+              <li>It must <strong>never</strong> be used to unlock features you would otherwise have to buy.</li>
+              <li>All GeoPrix Moddable mods must be ethical.</li>
+            </ul>
+            <p>If you enjoy GeoPrix, support the developer by getting it on Google Play.</p>'''
+
+CHEV ='<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.6 12 8 7.4 9.4 6l6 6-6 6L8 16.6z"/></svg>'
 
 PAGES = [("index", "Home"), ("mods", "Mods"), ("releases", "Releases")]
 
@@ -127,11 +137,27 @@ releases = f'''    <section>
             <div><dt>Size</dt><dd>{REL["size"]}</dd></div>
             <div><dt>Needs</dt><dd>{REL["android"]}, {REL["arch"]}</dd></div>
           </dl>
-          <a class="pill" href="{REL["url"]}">{DL}Download XAPK</a>
+          <div class="warning">
+            <div class="warning-title caps">Read before downloading</div>
+            {WARNING_TEXT}
+          </div>
+          <a class="pill" href="{REL["url"]}" data-confirm-download>{DL}Download XAPK</a>
           <p class="hash">SHA-256: <code>{REL["sha256"]}</code></p>
         </div>
       </div>
     </section>
+
+    <dialog class="confirm card" id="download-confirm" aria-labelledby="confirm-title">
+      <div class="card-bar caps warn" id="confirm-title">Before you download</div>
+      <form method="dialog" class="confirm-body">
+        {WARNING_TEXT}
+        <label class="agree"><input type="checkbox" id="confirm-agree"> I understand and agree to these rules</label>
+        <div class="actions">
+          <button class="pill grey" value="cancel">Cancel</button>
+          <button class="pill" value="ok" id="confirm-ok" disabled>{DL}Download</button>
+        </div>
+      </form>
+    </dialog>
 
     <section>
       <div class="tag section-tag">Changes</div>
