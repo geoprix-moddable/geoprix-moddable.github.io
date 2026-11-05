@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mods · GeoPrix Moddable</title>
   <meta name="description" content="Mods for GeoPrix Moddable.">
-  <meta name="theme-color" content="#0e8a5f">
+  <meta name="theme-color" content="#2a2a2a">
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel="apple-touch-icon" href="assets/images/logo-192.png">
   <meta property="og:title" content="Mods · GeoPrix Moddable">
@@ -13,38 +13,44 @@
   <meta property="og:image" content="https://geoprix-moddable.github.io/assets/images/logo-512.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202611052305">
-  <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=202611052309">
 </head>
 <body>
-  <div class="backdrop" aria-hidden="true"><span></span><span></span><span></span></div>
-
-  <nav class="nav glass" aria-label="Main">
-    <a class="brand-dot" href="./" aria-label="GeoPrix Moddable home"><img src="assets/images/logo-192.png" alt="" width="36" height="36"></a>
-    <a href="./" data-page="index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7z"/></svg><span>Home</span></a>
-    <a href="mods.html" data-page="mods"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.8 21H5q-.825 0-1.412-.587T3 19v-3.8q1.2 0 2.1-.762T6 12.5t-.9-1.937T3 9.8V6q0-.825.588-1.412T5 4h4q0-1.05.725-1.775T11.5 1.5t1.775.725T14 4h4q.825 0 1.413.588T20 6v4q1.05 0 1.775.725T22.5 12.5t-.725 1.775T20 15v4q0 .825-.587 1.413T18 21h-3.8q0-1.25-.787-2.125T11.5 18t-1.912.875T8.8 21"/></svg><span>Mods</span></a>
-    <button id="theme-toggle" aria-label="Switch light or dark theme"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21q-3.75 0-6.375-2.625T3 12t2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.663T21 12q0 3.75-2.625 6.375T12 21"/></svg></button>
-  </nav>
+  <header class="top bar">
+    <div class="top-inner">
+      <a class="brand" href="./">
+        <img src="assets/images/logo-192.png" alt="" width="38" height="38">
+        <span>GeoPrix Moddable</span>
+      </a>
+      <nav class="tags" aria-label="Main">
+        <a class="tag" href="./" data-page="index">Home</a>
+        <a class="tag" href="mods.html" data-page="mods">Mods</a>
+      </nav>
+    </div>
+  </header>
 
   <main>
-    <div class="page-head">
-      <h1>Mods</h1>
-      <p>Mods for GeoPrix Moddable will be listed here.</p>
-    </div>
-
-    <div class="empty glass">
-      <div class="bubble"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.8 21H5q-.825 0-1.412-.587T3 19v-3.8q1.2 0 2.1-.762T6 12.5t-.9-1.937T3 9.8V6q0-.825.588-1.412T5 4h4q0-1.05.725-1.775T11.5 1.5t1.775.725T14 4h4q.825 0 1.413.588T20 6v4q1.05 0 1.775.725T22.5 12.5t-.725 1.775T20 15v4q0 .825-.587 1.413T18 21h-3.8q0-1.25-.787-2.125T11.5 18t-1.912.875T8.8 21"/></svg></div>
-      <h2>No mods yet</h2>
-      <p>The first mods are on their way. Check back soon.</p>
-    </div>
+    <section>
+      <div class="tag section-tag">Mods</div>
+      <div class="card">
+        <div class="card-bar caps off">Installed</div>
+        <div class="empty">
+          <h1 class="big">No mods yet</h1>
+          <p>Mods for GeoPrix Moddable will be listed here.</p>
+          <span class="note">First mods coming soon</span>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer">
-    <p>© <span data-year></span> GeoPrix Moddable</p>
-    <p>Heading font: <a href="http://www.tupwanders.nl">Hokjesgeest</a> by Tup Wanders, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY)</a>.</p>
+  <footer class="footer bar">
+    <div class="footer-inner">
+      <span>© <span data-year></span> GeoPrix Moddable</span>
+      <span>Heading font: <a href="http://www.tupwanders.nl">Hokjesgeest</a> by Tup Wanders, <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY)</a></span>
+    </div>
   </footer>
 
-  <script src="assets/script.js?v=202611052305"></script>
+  <script src="assets/script.js?v=202611052309"></script>
 </body>
 </html>
