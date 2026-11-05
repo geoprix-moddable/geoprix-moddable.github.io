@@ -6,7 +6,7 @@ https://geoprix-moddable.github.io/
 ## Files
 
 - `index.html`: home page
-- `mods.html`, `install.html`, `modding.html`: sub-pages
+- `mods.html`: mods page (empty for now)
 - `404.html`: page-not-found screen
 - `assets/fonts/Hokjesgeest.otf`: heading font
 - `assets/images/`: logo (`icon.jpg` original, smaller copies for the site and favicon)
