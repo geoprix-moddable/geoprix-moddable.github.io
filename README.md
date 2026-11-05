@@ -7,6 +7,7 @@ https://geoprix-moddable.github.io/
 
 - `index.html`: home page
 - `mods.html`: mods page (empty for now)
+- `releases.html`: latest launcher release; the XAPK itself is a GitHub Release asset (not stored in the repo)
 - `404.html`: page-not-found screen
 - `assets/fonts/Hokjesgeest.otf`: heading font by Tup Wanders, CC BY (see `assets/fonts/LICENSE.txt`)
 - `assets/images/`: logo (`icon.jpg` original, smaller copies for the site and favicon)
