@@ -1,0 +1,21 @@
+Hokjesgeest
+===========
+
+Font:      Hokjesgeest (Regular), version 1.00, 2018
+Designer:  Tup Wanders
+Website:   http://www.tupwanders.nl
+License:   Creative Commons Attribution (CC BY)
+           https://creativecommons.org/licenses/by/4.0/
+
+The license is the one written into the font file itself:
+  "Typeface by Tup Wanders - Creative Commons Attribution license"
+The font file does not name a CC BY version; the link above is the
+current version (4.0).
+
+What CC BY allows: using, sharing and changing the font, including
+commercial use, as long as you give credit to the designer, link to the
+license, and say if you changed it. This site uses the font unchanged.
+
+Credit used on this site (shown in every page footer):
+  Heading font: Hokjesgeest by Tup Wanders, licensed under
+  Creative Commons Attribution (CC BY).
