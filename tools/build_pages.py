@@ -177,7 +177,8 @@ forum = '''    <section>
       </div>
     </section>'''
 
-FORUM_SCRIPTS = f'''  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+FORUM_SCRIPTS = f'''  <script src="https://accounts.google.com/gsi/client"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="assets/forum-config.js?v={V}"></script>
   <script src="assets/forum.js?v={V}"></script>'''
 

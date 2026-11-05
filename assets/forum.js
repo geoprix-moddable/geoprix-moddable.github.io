@@ -134,7 +134,8 @@
       p.setAttribute("d", d);
       g.append(p);
     }
-    return h("button", {
+    // Fallback: redirect through Supabase (Google then shows the supabase.co address).
+    const redirectBtn = h("button", {
       class: "google-btn",
       type: "button",
       onclick: async () => {
@@ -142,6 +143,50 @@
         if (error) alert(friendly(error));
       },
     }, g, "Continue with Google");
+
+    // Preferred: Google's own button, which signs in on this site, so Google shows
+    // "geoprix-moddable.github.io" instead of the Supabase address.
+    const box = h("div", { class: "google-box" }, redirectBtn);
+    const gis = window.google && window.google.accounts && window.google.accounts.id;
+    if (!gis || !cfg.googleClientId) return box;
+
+    (async () => {
+      try {
+        const bytes = crypto.getRandomValues(new Uint8Array(32));
+        const raw = btoa(String.fromCharCode(...bytes));
+        const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw));
+        const hashed = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+        gis.initialize({
+          client_id: cfg.googleClientId,
+          nonce: hashed,
+          use_fedcm_for_button: true,
+          callback: async (resp) => {
+            const { error } = await sb.auth.signInWithIdToken({ provider: "google", token: resp.credential, nonce: raw });
+            if (error) {
+              const note = box.parentNode && box.parentNode.querySelector(".google-error");
+              if (note) note.replaceChildren(errorNote(friendly(error)));
+              else alert(friendly(error));
+            } else if (dlg.open) {
+              dlg.close();
+            }
+          },
+        });
+        const slot = h("div", { class: "gis-slot" });
+        box.replaceChildren(slot, h("div", { class: "google-error" }));
+        gis.renderButton(slot, {
+          type: "standard",
+          theme: "filled_black",
+          size: "large",
+          shape: "pill",
+          text: "continue_with",
+          logo_alignment: "center",
+          width: Math.min(360, Math.max(220, (box.clientWidth || 300))),
+        });
+      } catch (e) {
+        box.replaceChildren(redirectBtn); // keep the fallback if anything goes wrong
+      }
+    })();
+    return box;
   }
 
   // ---------- account bar ----------

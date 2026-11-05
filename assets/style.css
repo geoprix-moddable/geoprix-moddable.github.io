@@ -574,3 +574,6 @@ section + section { margin-top: 32px; }
 .prose ul { padding-left: 20px; margin: 0 0 12px; }
 .prose li { margin-bottom: 6px; }
 .prose p, .prose li { color: var(--text); }
+.google-box { display: grid; justify-items: center; gap: 6px; min-height: 46px; }
+.google-box .google-btn { width: 100%; }
+.gis-slot { display: flex; justify-content: center; width: 100%; color-scheme: light; }
