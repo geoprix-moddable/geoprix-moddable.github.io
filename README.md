@@ -1,7 +1,7 @@
 # geoprix-moddable
 
 Website for GeoPrix Moddable, served by GitHub Pages at
-https://hostingbotshehe.github.io/geoprix-moddable/
+https://geoprix-moddable.github.io/
 
 ## Files
 
