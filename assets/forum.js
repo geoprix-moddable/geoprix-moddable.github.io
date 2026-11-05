@@ -57,7 +57,7 @@
   function errorNote(msg) { return h("p", { class: "form-error" }, msg); }
 
   // ---------- people: picture, name, badges ----------
-  const AUTHOR = "author:profiles(username, is_admin, is_modder, avatar_url, name_color)";
+  const AUTHOR = "author:profiles(num, username, is_admin, is_modder, avatar_url, name_color)";
   const isModderPlus = (p) => !!(p && (p.is_admin || p.is_modder));
   const okColor = (c) => typeof c === "string" && /^#[0-9A-Fa-f]{6}$/.test(c);
   const okAvatar = (u) => typeof u === "string" && u.startsWith(`${cfg.url}/storage/v1/object/public/avatars/`);
@@ -75,9 +75,10 @@
       p.is_modder ? h("span", { class: "badge" }, "Modder") : null,
     ];
   }
+  const profileHref = (p) => `#/u/${p.num != null ? p.num : encodeURIComponent(p.username)}`;
   function nameLink(p) {
     if (!p) return h("span", { class: "name" }, "deleted");
-    const a = h("a", { class: "name", href: `#/u/${encodeURIComponent(p.username)}` }, p.username);
+    const a = h("a", { class: "name", href: profileHref(p) }, p.username);
     if (isModderPlus(p) && okColor(p.name_color)) a.style.color = p.name_color;
     return a;
   }
@@ -109,7 +110,7 @@
     const { data: { session } } = await sb.auth.getSession();
     me = null;
     if (session) {
-      const { data } = await sb.from("profiles").select("id, username, is_admin, is_modder, needs_username, avatar_url, name_color").eq("id", session.user.id).maybeSingle();
+      const { data } = await sb.from("profiles").select("id, num, username, is_admin, is_modder, needs_username, avatar_url, name_color").eq("id", session.user.id).maybeSingle();
       me = data || { id: session.user.id, username: "?", is_admin: false };
     }
     renderAccount();
@@ -141,6 +142,37 @@
         h("button", { class: "pill grey", type: "button", onclick: () => dlg.close() }, "Later"),
         save));
     dlg.replaceChildren(h("div", { class: "card-bar caps" }, "Choose a username"), form);
+    if (!dlg.open) dlg.showModal();
+    user.select();
+  }
+
+  // Change your username any time. Roles and badges belong to the account, so they stay.
+  function openRename() {
+    const err = h("div");
+    const user = h("input", { type: "text", required: true, minlength: 3, maxlength: 20, pattern: "[A-Za-z0-9_]+", autocomplete: "username", value: me.username });
+    const save = h("button", { class: "pill", type: "submit" }, "Save");
+    const form = h("form", {
+      class: "confirm-body forum-form",
+      onsubmit: async (e) => {
+        e.preventDefault();
+        const name = user.value.trim();
+        if (name === me.username) { dlg.close(); return; }
+        save.disabled = true;
+        const { error } = await sb.rpc("rename_me", { new_name: name });
+        save.disabled = false;
+        if (error) { err.replaceChildren(errorNote(friendly(error))); return; }
+        dlg.close();
+        await loadMe();
+        route();
+      },
+    },
+      h("p", {}, "Your badges, posts and profile stay the same. Only the name changes."),
+      h("label", {}, h("span", { class: "caps" }, "New username"), user, h("small", {}, "3 to 20 letters, numbers or _")),
+      err,
+      h("div", { class: "actions" },
+        h("button", { class: "pill grey", type: "button", onclick: () => dlg.close() }, "Cancel"),
+        save));
+    dlg.replaceChildren(h("div", { class: "card-bar caps" }, "Change username"), form);
     if (!dlg.open) dlg.showModal();
     user.select();
   }
@@ -223,7 +255,7 @@
       account.replaceChildren(
         h("span", { class: "caps who" }, avatar(me, "xs"), "Signed in as ", h("strong", {}, nameLink(me)), badges(me)),
         h("span", { class: "account-actions" },
-          h("a", { class: "pill grey small", href: `#/u/${encodeURIComponent(me.username)}` }, "My profile"),
+          h("a", { class: "pill grey small", href: profileHref(me) }, "My profile"),
           h("button", { class: "pill grey small", onclick: () => sb.auth.signOut() }, "Sign out")));
     } else {
       account.replaceChildren(
@@ -473,12 +505,13 @@
   }
 
   // ---------- profiles ----------
-  const PROFILE_COLS = "id, username, is_admin, is_modder, bio, avatar_url, name_color, link, created_at";
-  const profileHref = (name) => `#/u/${encodeURIComponent(name)}`;
+  const PROFILE_COLS = "id, num, username, is_admin, is_modder, bio, avatar_url, name_color, link, created_at";
 
-  async function showProfile(username) {
+  async function showProfile(key) {
     view.replaceChildren(h("p", { class: "loading caps" }, "Loading…"));
-    const { data: p } = await sb.from("profiles").select(PROFILE_COLS).eq("username", username).maybeSingle();
+    const byNum = /^\d+$/.test(key);
+    const { data: p } = await sb.from("profiles").select(PROFILE_COLS).eq(byNum ? "num" : "username", key).maybeSingle();
+    if (p && !byNum) { history.replaceState(null, "", profileHref(p)); }
     if (!p) {
       view.replaceChildren(card("Not found", h("p", {}, "No user with that name. ", h("a", { href: "#/" }, "Back to the forum")), { off: true }));
       return;
@@ -499,7 +532,7 @@
         h("div", { class: "profile-id" },
           h("h1", { class: "profile-name" }, nameLink(p)),
           h("div", { class: "profile-badges" }, badges(p)),
-          h("small", {}, `Joined ${joined} · ${posts} ${posts === 1 ? "post" : "posts"}`))),
+          h("small", {}, `User #${p.num} · Joined ${joined} · ${posts} ${posts === 1 ? "post" : "posts"}`))),
     ];
     if (custom && p.bio) info.push(h("p", { class: "profile-bio" }, p.bio));
     if (custom && p.link && /^https:\/\//.test(p.link)) {
@@ -511,6 +544,7 @@
 
     const actions = [];
     if (mine && custom) actions.push(h("a", { class: "pill small", href: "#/edit" }, "Edit profile"));
+    if (mine) actions.push(h("button", { class: "pill grey small", onclick: openRename }, "Change username"));
     const err = h("div");
     if (me && me.is_admin) {
       const call = async (fn, args, ask) => {
@@ -543,7 +577,7 @@
 
   async function showEdit() {
     if (!me) { openAuth("in"); location.hash = "#/"; return; }
-    if (!isModderPlus(me)) { location.hash = profileHref(me.username); return; }
+    if (!isModderPlus(me)) { location.hash = profileHref(me); return; }
     view.replaceChildren(h("p", { class: "loading caps" }, "Loading…"));
     const { data: p } = await sb.from("profiles").select(PROFILE_COLS).eq("id", me.id).maybeSingle();
     if (!p) return;
@@ -572,7 +606,7 @@
     const link = h("input", { type: "url", maxlength: 200, placeholder: "https://…", pattern: "https://.+" });
     link.value = p.link || "";
     const save = h("button", { class: "pill", type: "submit" }, "Save profile");
-    const back = profileHref(me.username);
+    const back = profileHref(me);
 
     view.replaceChildren(
       h("p", { class: "back" }, h("a", { href: back }, "‹ Back to your profile")),
@@ -633,7 +667,7 @@
     if (parts[0] === "new") return showNew(parts[1]);
     if (parts[0] === "u" && parts[1]) {
       const name = decodeURIComponent(parts[1]);
-      if (/^[A-Za-z0-9_]{3,20}$/.test(name)) return showProfile(name);
+      if (/^\d+$/.test(name) || /^[A-Za-z0-9_]{3,20}$/.test(name)) return showProfile(name);
     }
     if (parts[0] === "edit") return showEdit();
     if (parts[0] === "c" && CATEGORIES.some(([k]) => k === parts[1])) return showList(parts[1]);
