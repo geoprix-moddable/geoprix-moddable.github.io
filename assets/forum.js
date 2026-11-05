@@ -437,7 +437,7 @@
         h("label", {}, h("span", { class: "caps" }, "Category"), sel),
         h("label", {}, h("span", { class: "caps" }, "Title"), title),
         h("label", {}, h("span", { class: "caps" }, "Message"), body),
-        h("p", { class: "rules" }, "Be kind. No cheats, no ways around paid features, no piracy."),
+        h("p", { class: "rules" }, "Rules: 13+ only. No illegal content, nothing that harms others, no Pro or paid-feature bypasses, no malware."),
         err,
         h("div", { class: "actions" }, h("a", { class: "pill grey", href: "#/" }, "Cancel"), send))));
     title.focus();

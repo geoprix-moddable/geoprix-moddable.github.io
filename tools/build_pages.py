@@ -268,11 +268,10 @@ terms = f'''    <section>
 
           <h2 class="prose-h">Forum rules</h2>
           <ul>
-            <li>Be kind. No harassment, hate, threats or spam.</li>
-            <li>No cheats, piracy, or ways around paid features, for GeoPrix or any other game or app.</li>
-            <li>No malware, and no links to files you don't know are safe.</li>
-            <li>No illegal content, and nothing that breaks someone else's copyright.</li>
-            <li>Don't post other people's private information.</li>
+            <li>No illegal content.</li>
+            <li>Nothing that harms others.</li>
+            <li>No ways to bypass Pro or other paid features.</li>
+            <li>No malware.</li>
           </ul>
           <p>You keep the rights to what you post, but you let us show it on the forum. Posts are public.</p>
 
