@@ -73,7 +73,7 @@ def layout(title, desc, body, base="", scripts=""):
 
   <footer class="footer bar">
     <div class="footer-inner">
-      <span>© <span data-year></span> GeoPrix Moddable</span>
+      <span>© <span data-year></span> GeoPrix Moddable · <a href="{base}privacy.html">Privacy</a></span>
       <span>Heading font: <a href="http://www.tupwanders.nl">Hokjesgeest</a> by Tup Wanders, <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY)</a></span>
     </div>
   </footer>
@@ -181,6 +181,61 @@ FORUM_SCRIPTS = f'''  <script src="https://cdn.jsdelivr.net/npm/@supabase/supaba
   <script src="assets/forum-config.js?v={V}"></script>
   <script src="assets/forum.js?v={V}"></script>'''
 
+privacy = '''    <section>
+      <div class="tag section-tag">Privacy</div>
+      <div class="card">
+        <div class="card-bar caps">Privacy policy</div>
+        <div class="card-body prose">
+          <p class="muted">Last updated: 6 November 2026</p>
+
+          <h2 class="prose-h">Who we are</h2>
+          <p>GeoPrix Moddable is a fan project that adds a mod loader to the game GeoPrix. This website is
+          <strong>geoprix-moddable.github.io</strong>. It is not made by or connected to the developer of GeoPrix.</p>
+
+          <h2 class="prose-h">What we collect</h2>
+          <p>Most of the site works without an account and we don't collect anything about you. If you create a
+          forum account, we store:</p>
+          <ul>
+            <li>your <strong>email address</strong> (to sign you in, confirm your account and reset your password);</li>
+            <li>your <strong>username</strong>, which everyone can see next to your posts;</li>
+            <li>the <strong>threads and replies</strong> you post, which are public;</li>
+            <li>if you use <strong>Continue with Google</strong>: the name and email address Google shares with us.
+            We don't get your Google password or anything else from your Google account.</li>
+          </ul>
+
+          <h2 class="prose-h">How we use it</h2>
+          <p>Only to run the forum: to sign you in, show your username on your posts, and stop spam and abuse.
+          We don't sell your data, show ads, or use it for tracking or marketing. We don't send newsletters.</p>
+
+          <h2 class="prose-h">Where it is stored</h2>
+          <p>Forum accounts and posts are stored with <a href="https://supabase.com/privacy">Supabase</a>
+          (servers in the EU, Ireland). The website itself is hosted by
+          <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub Pages</a>,
+          and fonts are loaded from <a href="https://policies.google.com/privacy">Google Fonts</a>; both may log
+          your IP address as part of serving the site.</p>
+
+          <h2 class="prose-h">Cookies and storage</h2>
+          <p>When you sign in, your browser keeps a sign-in token in local storage so you stay signed in. We don't use
+          advertising or tracking cookies.</p>
+
+          <h2 class="prose-h">Your choices</h2>
+          <ul>
+            <li>You can delete your own threads and replies at any time.</li>
+            <li>To delete your account and everything linked to it, post in the forum's Help category or ask an admin.
+            We'll delete it within 30 days.</li>
+            <li>If you signed in with Google, you can also remove our access at
+            <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a>.</li>
+          </ul>
+
+          <h2 class="prose-h">Children</h2>
+          <p>The forum is not meant for children under 13. Don't create an account if you are under 13.</p>
+
+          <h2 class="prose-h">Changes</h2>
+          <p>If this policy changes, we'll update the date at the top of this page.</p>
+        </div>
+      </div>
+    </section>'''
+
 notfound = '''    <section class="card">
       <div class="card-bar caps off">Error</div>
       <div class="empty">
@@ -194,6 +249,7 @@ files = {
  "index.html": layout("Home", "GeoPrix with a built-in mod loader. Drop in a .gpmod file and add new features to the game.", home),
  "mods.html": layout("Mods", "Mods for GeoPrix Moddable.", mods),
  "releases.html": layout("Releases", f"Download GeoPrix Moddable launcher v{REL['launcher']} for GeoPrix {REL['game']}.", releases),
+ "privacy.html": layout("Privacy", "Privacy policy for GeoPrix Moddable and its forum.", privacy),
  "forum.html": layout("Forum", "The GeoPrix Moddable community forum.", forum, scripts=FORUM_SCRIPTS),
  "404.html": layout("Page not found", "Page not found.", notfound, base="/"),
 }

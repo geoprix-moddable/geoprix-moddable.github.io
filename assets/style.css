@@ -558,3 +558,19 @@ section + section { margin-top: 32px; }
   text-shadow: var(--hard-shadow);
 }
 .or::before, .or::after { content: ""; flex: 1; height: 1px; background: #3a3a3a; }
+
+/* ---------- prose (privacy page) ---------- */
+.prose { max-width: 760px; }
+.prose-h {
+  margin: 22px 0 8px;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--green-1);
+  text-shadow: var(--hard-shadow);
+}
+.prose ul { padding-left: 20px; margin: 0 0 12px; }
+.prose li { margin-bottom: 6px; }
+.prose p, .prose li { color: var(--text); }
