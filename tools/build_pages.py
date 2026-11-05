@@ -29,7 +29,7 @@ WARNING_TEXT = f'''<p>This is a <strong>modified version</strong> of GeoPrix. Th
 
 CHEV ='<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.6 12 8 7.4 9.4 6l6 6-6 6L8 16.6z"/></svg>'
 
-PAGES = [("index", "Home"), ("mods", "Mods"), ("releases", "Releases"), ("community", "Community")]
+PAGES = [("index", "Home"), ("mods", "Mods"), ("releases", "Releases")]
 
 def layout(title, desc, body, base=""):
     def href(p): return (base or "./") if p == "index" else f"{base}{p}.html"
@@ -169,72 +169,6 @@ releases = f'''    <section>
       </div>
     </section>'''
 
-DISC = "https://github.com/geoprix-moddable/geoprix-moddable.github.io/discussions"
-CATS = [
-    ("announcements", "Announcements", "News and new releases"),
-    ("q-a", "Help (Q&amp;A)", "Ask a question, get answers"),
-    ("ideas", "Ideas", "Ideas for mods and the launcher"),
-    ("show-and-tell", "Show and tell", "Share your grids, cars and mods"),
-    ("general", "General", "Everything else"),
-]
-GISCUS = dict(
-    repo="geoprix-moddable/geoprix-moddable.github.io",
-    repo_id="R_kgDOVkfOiw",
-    category="General",
-    category_id="DIC_kwDOVkfOi84DKe3L",
-)
-
-cat_rows = "\n".join(f'''        <a class="row" href="{DISC}/categories/{slug}"><span class="label"><span class="caps">{name}</span><small>{desc}</small></span>{CHEV}</a>''' for slug, name, desc in CATS)
-
-community = f'''    <section>
-      <div class="tag section-tag">Community</div>
-      <div class="card">
-        <div class="card-bar caps">Forum</div>
-        <div class="card-body">
-          <p>Talk about GeoPrix Moddable, ask for help and share ideas. The forum runs on GitHub Discussions: anyone can read, and posting needs a free GitHub account.</p>
-          <div class="actions">
-            <a class="pill" href="{DISC}">Open the forum</a>
-            <a class="pill grey" href="{DISC}/new/choose">New post</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="tag section-tag">Categories</div>
-      <div class="rows">
-{cat_rows}
-      </div>
-    </section>
-
-    <section>
-      <div class="tag section-tag">Chat</div>
-      <div class="card">
-        <div class="card-bar caps">Community board</div>
-        <div class="card-body">
-          <p class="muted">Leave a quick message for everyone. Sign in with GitHub to post.</p>
-          <div class="giscus"></div>
-        </div>
-      </div>
-    </section>
-
-    <script src="https://giscus.app/client.js"
-      data-repo="{GISCUS["repo"]}"
-      data-repo-id="{GISCUS["repo_id"]}"
-      data-category="{GISCUS["category"]}"
-      data-category-id="{GISCUS["category_id"]}"
-      data-mapping="specific"
-      data-term="Community board"
-      data-strict="1"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="https://geoprix-moddable.github.io/assets/giscus-theme.css"
-      data-lang="en"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async></script>'''
-
 notfound = '''    <section class="card">
       <div class="card-bar caps off">Error</div>
       <div class="empty">
@@ -248,7 +182,6 @@ files = {
  "index.html": layout("Home", "GeoPrix with a built-in mod loader. Drop in a .gpmod file and add new features to the game.", home),
  "mods.html": layout("Mods", "Mods for GeoPrix Moddable.", mods),
  "releases.html": layout("Releases", f"Download GeoPrix Moddable launcher v{REL['launcher']} for GeoPrix {REL['game']}.", releases),
- "community.html": layout("Community", "The GeoPrix Moddable community forum.", community),
  "404.html": layout("Page not found", "Page not found.", notfound, base="/"),
 }
 for name, html in files.items():
