@@ -527,3 +527,34 @@ section + section { margin-top: 32px; }
 .rules { margin: 0; color: var(--gold); font-size: .85rem; font-weight: 700; text-shadow: var(--hard-shadow); }
 .switch { margin: 0; text-align: center; font-size: .9rem; }
 .confirm .forum-form { padding: 18px 16px 20px; }
+
+/* ---------- Google sign-in ---------- */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffffff, #e9e9e9);
+  color: #1f1f1f;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: .02em;
+  box-shadow: inset 0 1px 0 #fff, 0 3px 0 #000;
+  cursor: pointer;
+}
+.google-btn:hover { filter: brightness(.97); }
+.google-btn:active { transform: translateY(2px); box-shadow: inset 0 1px 0 #fff, 0 1px 0 #000; }
+.g-logo { width: 20px; height: 20px; }
+.or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-3);
+  font-size: .75rem;
+  text-shadow: var(--hard-shadow);
+}
+.or::before, .or::after { content: ""; flex: 1; height: 1px; background: #3a3a3a; }

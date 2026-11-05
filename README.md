@@ -7,7 +7,7 @@ https://geoprix-moddable.github.io/
 
 - `index.html`: home page
 - `mods.html`: mods page (empty for now)
-- `forum.html`: forum (Supabase); code in `assets/forum.js`, connection in `assets/forum-config.js`, database setup in `supabase/schema.sql`
+- `forum.html`: forum (Supabase); code in `assets/forum.js`, connection in `assets/forum-config.js`, database setup in `supabase/schema.sql` then `supabase/002_google_signin.sql`
 - `releases.html`: latest launcher release; the XAPK itself is a GitHub Release asset (not stored in the repo)
 - `404.html`: page-not-found screen
 - `assets/fonts/Hokjesgeest.otf`: heading font by Tup Wanders, CC BY (see `assets/fonts/LICENSE.txt`)

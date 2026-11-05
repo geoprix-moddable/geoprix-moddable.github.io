@@ -83,10 +83,65 @@
     const { data: { session } } = await sb.auth.getSession();
     me = null;
     if (session) {
-      const { data } = await sb.from("profiles").select("id, username, is_admin").eq("id", session.user.id).maybeSingle();
+      const { data } = await sb.from("profiles").select("id, username, is_admin, needs_username").eq("id", session.user.id).maybeSingle();
       me = data || { id: session.user.id, username: "?", is_admin: false };
     }
     renderAccount();
+    if (me && me.needs_username) openPickUsername();
+  }
+
+  // First Google sign-in: choose a username (the database gave a temporary one).
+  function openPickUsername() {
+    const err = h("div");
+    const user = h("input", { type: "text", required: true, minlength: 3, maxlength: 20, pattern: "[A-Za-z0-9_]+", autocomplete: "username", value: me.username });
+    const save = h("button", { class: "pill", type: "submit" }, "Save username");
+    const form = h("form", {
+      class: "confirm-body forum-form",
+      onsubmit: async (e) => {
+        e.preventDefault();
+        save.disabled = true;
+        const { error } = await sb.rpc("set_username", { new_name: user.value.trim() });
+        save.disabled = false;
+        if (error) { err.replaceChildren(errorNote(friendly(error))); return; }
+        dlg.close();
+        await loadMe();
+        route();
+      },
+    },
+      h("p", {}, "Welcome! Pick the name other people will see on the forum. You can only choose it once."),
+      h("label", {}, h("span", { class: "caps" }, "Username"), user, h("small", {}, "3 to 20 letters, numbers or _")),
+      err,
+      h("div", { class: "actions" },
+        h("button", { class: "pill grey", type: "button", onclick: () => dlg.close() }, "Later"),
+        save));
+    dlg.replaceChildren(h("div", { class: "card-bar caps" }, "Choose a username"), form);
+    if (!dlg.open) dlg.showModal();
+    user.select();
+  }
+
+  function googleButton() {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    g.setAttribute("viewBox", "0 0 48 48");
+    g.setAttribute("class", "g-logo");
+    for (const [fill, d] of [
+      ["#EA4335", "M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"],
+      ["#4285F4", "M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"],
+      ["#FBBC05", "M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"],
+      ["#34A853", "M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"],
+    ]) {
+      const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("fill", fill);
+      p.setAttribute("d", d);
+      g.append(p);
+    }
+    return h("button", {
+      class: "google-btn",
+      type: "button",
+      onclick: async () => {
+        const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: here() } });
+        if (error) alert(friendly(error));
+      },
+    }, g, "Continue with Google");
   }
 
   // ---------- account bar ----------
@@ -155,6 +210,7 @@
         }
       },
     },
+      mode !== "reset" ? [googleButton(), h("div", { class: "or caps" }, "or use email")] : null,
       mode === "up" ? h("label", {}, h("span", { class: "caps" }, "Username"), user, h("small", {}, "3 to 20 letters, numbers or _")) : null,
       h("label", {}, h("span", { class: "caps" }, "Email"), email),
       mode !== "reset" ? h("label", {}, h("span", { class: "caps" }, "Password"), pass, mode === "up" ? h("small", {}, "At least 8 characters") : null) : null,
