@@ -28,3 +28,8 @@ Then open http://localhost:8000.
   [Creative Commons Attribution (CC BY)](https://creativecommons.org/licenses/by/4.0/).
   The credit is shown in every page footer, as the license requires.
 - Body font: [Inter](https://fonts.google.com/specimen/Inter), SIL Open Font License, loaded from Google Fonts.
+
+## After changing the CSS or JS
+
+Bump the `?v=` number on the `style.css` and `script.js` links in every `.html` file,
+so browsers load the new files instead of a cached copy.
