@@ -4,76 +4,102 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GeoPrix Moddable</title>
-  <meta name="description" content="A modded GeoPrix build with a mod loader, plus mods for it.">
+  <meta name="description" content="GeoPrix with a built-in mod loader. Custom cars, team logos, engine sounds and more.">
+  <meta name="theme-color" content="#127464">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/logo-192.png">
+  <meta property="og:title" content="GeoPrix Moddable">
+  <meta property="og:description" content="GeoPrix with a built-in mod loader. Custom cars, team logos, engine sounds and more.">
+  <meta property="og:image" content="assets/images/logo-512.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400..700&family=Roboto+Mono&display=swap">
   <link rel="stylesheet" href="assets/style.css">
+  <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="./">GeoPrix Moddable</a>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#mods">Mods</a>
-      <a href="#install">Install</a>
+  <header class="top-bar">
+    <a class="brand" href="./">
+      <img src="assets/images/logo-192.png" alt="" width="40" height="40">
+      <span>GeoPrix Moddable</span>
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a href="./" data-page="index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7z"/></svg>Home</a>
+      <a href="mods.html" data-page="mods"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.8 21H5q-.825 0-1.412-.587T3 19v-3.8q1.2 0 2.1-.762T6 12.5t-.9-1.937T3 9.8V6q0-.825.588-1.412T5 4h4q0-1.05.725-1.775T11.5 1.5t1.775.725T14 4h4q.825 0 1.413.588T20 6v4q1.05 0 1.775.725T22.5 12.5t-.725 1.775T20 15v4q0 .825-.587 1.413T18 21h-3.8q0-1.25-.787-2.125T11.5 18t-1.912.875T8.8 21"/></svg>Mods</a>
+      <a href="install.html" data-page="install"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5 1.4-1.45 2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg>Install</a>
+      <a href="modding.html" data-page="modding"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 18l-6-6 6-6 1.425 1.425-4.6 4.6L9.4 16.6zm8 0l-1.425-1.425 4.6-4.6L14.6 7.4 16 6l6 6z"/></svg>Make mods</a>
     </nav>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">◐</button>
+    <button id="theme-toggle" class="icon-button" aria-label="Switch light or dark theme"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21q-3.75 0-6.375-2.625T3 12t2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.663T21 12q0 3.75-2.625 6.375T12 21"/></svg></button>
   </header>
 
   <main>
-    <section class="hero">
-      <h1>GeoPrix, but moddable.</h1>
-      <p>A GeoPrix build with a built-in mod loader. Drop in <code>.gpmod</code> files to add features to the game.</p>
-      <a class="button" href="#mods">Browse mods</a>
+    <section class="hero" style="margin-top:8px">
+      <div>
+        <h1>GeoPrix<br>Moddable</h1>
+        <p>GeoPrix with a built-in mod loader. Drop in a <strong>.gpmod</strong> file and get custom cars, team logos, engine sounds and more.</p>
+        <div class="actions">
+          <a class="button filled" href="mods.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.8 21H5q-.825 0-1.412-.587T3 19v-3.8q1.2 0 2.1-.762T6 12.5t-.9-1.937T3 9.8V6q0-.825.588-1.412T5 4h4q0-1.05.725-1.775T11.5 1.5t1.775.725T14 4h4q.825 0 1.413.588T20 6v4q1.05 0 1.775.725T22.5 12.5t-.725 1.775T20 15v4q0 .825-.587 1.413T18 21h-3.8q0-1.25-.787-2.125T11.5 18t-1.912.875T8.8 21"/></svg>Browse mods</a>
+          <a class="button outlined" href="install.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5 1.4-1.45 2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg>How to install</a>
+        </div>
+      </div>
+      <img class="hero-logo" src="assets/images/logo-512.jpg" alt="GeoPrix Moddable logo" width="220" height="220">
     </section>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>GeoPrix Moddable (game version 3.3) loads Java mods when the game starts. Mods can add buttons to the Settings tab, keep their own saved data, call game classes and, on a real arm64 phone, hook game methods.</p>
-    </section>
-
-    <section id="mods">
-      <h2>Mods</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Custom Cars</h3>
-          <p>Put a team's own image on its car, or replace the car with it.</p>
-        </article>
-        <article class="card">
-          <h3>Team Logos</h3>
-          <p>Show an uploaded image for a team instead of its colour.</p>
-        </article>
-        <article class="card">
-          <h3>Engine Sound</h3>
-          <p>Every car in a race gets its own looping engine sound.</p>
-        </article>
-        <article class="card">
-          <h3>Satellite Race</h3>
-          <p>Races and highlight videos use the satellite map instead of the street map.</p>
-        </article>
-        <article class="card">
-          <h3>Sub-Stats Unlock</h3>
-          <p>Shows driver and car sub-stats on the team and driver sheets without Pro.</p>
-        </article>
-        <article class="card">
-          <h3>Hello Screen</h3>
-          <p>Example mod: a Settings button that opens a dialog. Start here to make your own.</p>
-        </article>
+    <section>
+      <h2>Why moddable?</h2>
+      <div class="grid">
+        <div class="card feature">
+          <div class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 22l1-7H4l9-13h2l-1 8h6L10 22z"/></svg></div>
+          <h3>Plug and play</h3>
+          <p>Mods are single .gpmod files. Copy one into the GeoPrix Mods folder and switch it on.</p>
+        </div>
+        <div class="card feature">
+          <div class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20.95q-3.025-.375-5.012-2.637T4 13q0-1.65.65-3.162T6.5 7.2l1.425 1.425q-.95.85-1.437 1.975T6 13q0 2.2 1.4 3.888T11 18.95zm2 0v-2q2.175-.4 3.588-2.075T18 13q0-2.5-1.75-4.25T12 7h-.075l1.1 1.1-1.4 1.4-3.5-3.5 3.5-3.5 1.4 1.4-1.1 1.1H12q3.35 0 5.675 2.325T20 13q0 3.025-1.987 5.288T13 20.95"/></svg></div>
+          <h3>Turn on and off</h3>
+          <p>Every mod has its own switch in the Mods screen. One restart and it's in or out.</p>
+        </div>
+        <div class="card feature">
+          <div class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 18l-6-6 6-6 1.425 1.425-4.6 4.6L9.4 16.6zm8 0l-1.425-1.425 4.6-4.6L14.6 7.4 16 6l6 6z"/></svg></div>
+          <h3>Make your own</h3>
+          <p>Mods are Java. Copy the example, change the code, build it with one command.</p>
+        </div>
       </div>
     </section>
 
-    <section id="install">
-      <h2>Install</h2>
-      <ol>
-        <li>Install the GeoPrix Moddable APK on your phone.</li>
-        <li>Download a <code>.gpmod</code> file.</li>
-        <li>Copy it into the <strong>GeoPrix Mods</strong> folder with the Files app.</li>
-        <li>Restart GeoPrix.</li>
-      </ol>
+    <section>
+      <h2>Featured mods</h2>
+      <div class="grid">
+        <a class="card" href="mods.html#geoprix.customcars">
+          <div class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19v1q0 .425-.288.713T4 21H3q-.425 0-.712-.288T2 20v-8l2.1-6q.15-.45.537-.725T5.5 5h13q.475 0 .863.275T19.9 6l2.1 6v8q0 .425-.288.713T21 21h-1q-.425 0-.712-.288T19 20v-1zm-.2-9h14.4l-1.05-3H5.85zm1.7 6q.625 0 1.063-.437T8 14.5t-.437-1.062T6.5 13t-1.062.438T5 14.5t.438 1.063T6.5 16m11 0q.625 0 1.063-.437T19 14.5t-.437-1.062T17.5 13t-1.062.438T16 14.5t.438 1.063T17.5 16"/></svg></div>
+          <h3>Custom Cars</h3>
+          <p>Put a team's own image on its car, or swap the car for it completely.</p>
+        </a>
+        <a class="card" href="mods.html#geoprix.teamlogos">
+          <div class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm1-4h12l-3.75-5-3 4L9 13z"/></svg></div>
+          <h3>Team Logos</h3>
+          <p>Each team can show an uploaded logo instead of its colour.</p>
+        </a>
+        <a class="card" href="mods.html#geoprix.enginesound">
+          <div class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 20.725v-2.05q2.25-.65 3.625-2.5t1.375-4.2t-1.375-4.2T14 5.275v-2.05q3.1.7 5.05 3.138T21 11.975t-1.95 5.613T14 20.725M3 15V9h4l5-5v16l-5-5zm11 1V7.95q1.175.55 1.838 1.65T16.5 12q0 1.275-.663 2.363T14 16"/></svg></div>
+          <h3>Engine Sound</h3>
+          <p>Every car in a race gets its own engine sound.</p>
+        </a>
+      </div>
+      <p style="margin-top:20px"><a class="button tonal" href="mods.html">See all 6 mods <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.175 13H4v-2h12.175l-5.6-5.6L12 4l8 8-8 8-1.425-1.4z"/></svg></a></p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> GeoPrix Moddable · Hosted on GitHub Pages</p>
+    <div class="brand-mini"><img src="assets/images/favicon.png" alt=""> © <span data-year></span> GeoPrix Moddable</div>
+    <nav aria-label="Footer"><a href="./">Home</a> <a href="mods.html">Mods</a> <a href="install.html">Install</a> <a href="modding.html">Make mods</a></nav>
   </footer>
+
+  <nav class="nav-bar" aria-label="Main">
+  <a href="./" data-page="index"><span class="pill"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7z"/></svg></span>Home</a>
+  <a href="mods.html" data-page="mods"><span class="pill"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.8 21H5q-.825 0-1.412-.587T3 19v-3.8q1.2 0 2.1-.762T6 12.5t-.9-1.937T3 9.8V6q0-.825.588-1.412T5 4h4q0-1.05.725-1.775T11.5 1.5t1.775.725T14 4h4q.825 0 1.413.588T20 6v4q1.05 0 1.775.725T22.5 12.5t-.725 1.775T20 15v4q0 .825-.587 1.413T18 21h-3.8q0-1.25-.787-2.125T11.5 18t-1.912.875T8.8 21"/></svg></span>Mods</a>
+  <a href="install.html" data-page="install"><span class="pill"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5 1.4-1.45 2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg></span>Install</a>
+  <a href="modding.html" data-page="modding"><span class="pill"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 18l-6-6 6-6 1.425 1.425-4.6 4.6L9.4 16.6zm8 0l-1.425-1.425 4.6-4.6L14.6 7.4 16 6l6 6z"/></svg></span>Make mods</a>
+  </nav>
 
   <script src="assets/script.js"></script>
 </body>
