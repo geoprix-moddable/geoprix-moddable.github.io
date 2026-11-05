@@ -1,0 +1,119 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1d1f23;
+  --muted: #5b6270;
+  --card: #f4f5f7;
+  --border: #e2e4e8;
+  --accent: #2f6fde;
+  --accent-fg: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  --bg: #121417;
+  --fg: #e8eaee;
+  --muted: #9aa1ad;
+  --card: #1c1f24;
+  --border: #2b2f36;
+  --accent: #6c9cf5;
+  --accent-fg: #0d0f12;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121417;
+    --fg: #e8eaee;
+    --muted: #9aa1ad;
+    --card: #1c1f24;
+    --border: #2b2f36;
+    --accent: #6c9cf5;
+    --accent-fg: #0d0f12;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+a { color: var(--accent); }
+
+code {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand { font-weight: 700; color: var(--fg); text-decoration: none; margin-right: auto; }
+
+nav { display: flex; gap: 16px; }
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--fg); }
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 1rem;
+}
+
+main { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+
+.hero { padding: 80px 0 64px; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 0 0 8px; }
+.hero p { color: var(--muted); font-size: 1.15rem; margin: 0 0 24px; }
+
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.card h3 { margin: 0 0 4px; }
+.card p { color: var(--muted); margin: 0 0 12px; }
+
+.site-footer { text-align: center; color: var(--muted); padding: 32px 16px; font-size: 0.9rem; }
+
+@media (max-width: 520px) {
+  nav { display: none; }
+}

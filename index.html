@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GeoPrix Moddable</title>
+  <meta name="description" content="A modded GeoPrix build with a mod loader, plus mods for it.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./">GeoPrix Moddable</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#mods">Mods</a>
+      <a href="#install">Install</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">◐</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>GeoPrix, but moddable.</h1>
+      <p>A GeoPrix build with a built-in mod loader. Drop in <code>.gpmod</code> files to add features to the game.</p>
+      <a class="button" href="#mods">Browse mods</a>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>GeoPrix Moddable (game version 3.3) loads Java mods when the game starts. Mods can add buttons to the Settings tab, keep their own saved data, call game classes and, on a real arm64 phone, hook game methods.</p>
+    </section>
+
+    <section id="mods">
+      <h2>Mods</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Custom Cars</h3>
+          <p>Put a team's own image on its car, or replace the car with it.</p>
+        </article>
+        <article class="card">
+          <h3>Team Logos</h3>
+          <p>Show an uploaded image for a team instead of its colour.</p>
+        </article>
+        <article class="card">
+          <h3>Engine Sound</h3>
+          <p>Every car in a race gets its own looping engine sound.</p>
+        </article>
+        <article class="card">
+          <h3>Satellite Race</h3>
+          <p>Races and highlight videos use the satellite map instead of the street map.</p>
+        </article>
+        <article class="card">
+          <h3>Sub-Stats Unlock</h3>
+          <p>Shows driver and car sub-stats on the team and driver sheets without Pro.</p>
+        </article>
+        <article class="card">
+          <h3>Hello Screen</h3>
+          <p>Example mod: a Settings button that opens a dialog. Start here to make your own.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Install</h2>
+      <ol>
+        <li>Install the GeoPrix Moddable APK on your phone.</li>
+        <li>Download a <code>.gpmod</code> file.</li>
+        <li>Copy it into the <strong>GeoPrix Mods</strong> folder with the Files app.</li>
+        <li>Restart GeoPrix.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> GeoPrix Moddable · Hosted on GitHub Pages</p>
+  </footer>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
