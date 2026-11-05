@@ -1,0 +1,30 @@
+/* giscus theme matching the GeoPrix Classic look (green). Loaded by giscus from this site. */
+@import url("https://giscus.app/themes/dark.css");
+
+main {
+  --color-canvas-default: #222222;
+  --color-canvas-overlay: #262626;
+  --color-canvas-inset: #1b1b1b;
+  --color-canvas-subtle: #2a2a2a;
+  --color-border-default: #0a0a0a;
+  --color-border-muted: #333333;
+  --color-fg-default: #f2f2f2;
+  --color-fg-muted: #a9a9a9;
+  --color-accent-fg: #3fe58c;
+  --color-accent-emphasis: #0fae55;
+  --color-accent-muted: rgba(63, 229, 140, .4);
+  --color-accent-subtle: rgba(63, 229, 140, .12);
+  --color-btn-primary-bg: #0fae55;
+  --color-btn-primary-hover-bg: #22c86c;
+  --color-btn-primary-border: #08321b;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-bg: #363636;
+  --color-btn-hover-bg: #404040;
+  --color-btn-border: #0a0a0a;
+  --color-btn-text: #f2f2f2;
+  font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
+}
+
+.gsc-comment-box, .gsc-comment > div {
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .55);
+}
