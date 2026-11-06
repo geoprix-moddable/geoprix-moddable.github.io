@@ -463,6 +463,139 @@ a.name:hover { text-decoration: underline; }
 .post-bar .author .badge, .profile-badges .badge { margin: 0 0 0 8px; }
 .profile-badges .badge:first-child { margin-left: 0; }
 
+/* ---------- signed-in account bar ---------- */
+.forum-account.signed { justify-content: flex-start; gap: 12px; padding: 10px 14px; }
+.forum-account.signed .account-actions { margin-left: auto; }
+.acct-id { display: grid; gap: 2px; min-width: 0; }
+.acct-id small { color: var(--text-3); font-size: .7rem; letter-spacing: .08em; text-shadow: var(--hard-shadow); }
+.acct-name { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 1.1rem; }
+.acct-name .badge { margin: 0; }
+@media (max-width: 560px) {
+  .forum-account.signed .account-actions { margin-left: 0; width: 100%; }
+}
+
+/* ---------- boards ---------- */
+.icon { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.board-section { margin-bottom: 22px; }
+.board-row { gap: 14px; padding-top: 12px; padding-bottom: 12px; }
+.board-row .label { display: grid; gap: 3px; min-width: 0; }
+.board-row .label small { color: var(--text-2); }
+.board-row .latest { color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.board-row .latest strong { color: var(--text-2); }
+.board-name { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 700; text-shadow: var(--hard-shadow); }
+.board-name .badge { margin: 0; }
+.board-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  background: linear-gradient(180deg, var(--green-1), var(--green-2));
+  box-shadow: inset 0 1px 0 var(--green-hi), 0 2px 0 #000;
+  color: #fff;
+}
+.board-icon .icon { width: 26px; height: 26px; filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .45)); }
+.board-icon.mods { background: linear-gradient(180deg, #4fd3ff, #1586c9); box-shadow: inset 0 1px 0 #a6e8ff, 0 2px 0 #000; }
+.board-icon.announcements { background: linear-gradient(180deg, #ffc65a, #d98a12); box-shadow: inset 0 1px 0 #ffe2a3, 0 2px 0 #000; }
+.board-count { display: grid; justify-items: center; min-width: 56px; }
+.board-count strong { font-size: 1.2rem; text-shadow: var(--hard-shadow); }
+.board-count small { color: var(--text-3); font-size: .75rem; }
+.board-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.board-head .board-icon { width: 56px; height: 56px; }
+.board-head .board-icon .icon { width: 32px; height: 32px; }
+.board-title { margin: 0; font-size: clamp(1.4rem, 5vw, 2rem); line-height: 1.1; text-shadow: 0 2px 0 #000; }
+.board-head p { margin: 4px 0 0; color: var(--text-2); }
+@media (max-width: 560px) { .board-count { display: none; } }
+
+.version-filter {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--outline);
+  background: #141414;
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+}
+.muted { color: var(--text-3); }
+.hint { margin: 0; font-size: .9rem; }
+.hint:empty { display: none; }
+
+/* ---------- mod tabs + releases ---------- */
+.tabs { display: flex; gap: 6px; margin: -4px 0 16px; border-bottom: 2px solid #000; }
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  color: var(--text-2);
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: .85rem;
+  background: linear-gradient(180deg, #2c2c2c, #1d1d1d);
+  border: 1px solid #000;
+  border-bottom: 0;
+  text-shadow: var(--hard-shadow);
+}
+.tab[aria-current="page"] { color: #fff; background: linear-gradient(180deg, var(--green-1), var(--green-2)); }
+.tab:hover:not([aria-current]) { color: var(--green-1); }
+.release-item { margin-bottom: 12px; }
+.release-item .card-bar { display: flex; align-items: center; gap: 10px; }
+.bar-badge { margin: 0; }
+.release-body { display: grid; gap: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #000;
+  background: #2a2a2a;
+  color: var(--text);
+  font-size: .8rem;
+  font-weight: 700;
+}
+.chip.dim { color: var(--text-3); background: #1a1a1a; }
+.release-notes { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.release-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.release-actions .pill, .file-pill { display: inline-flex; align-items: center; gap: 8px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+
+/* ---------- attachments ---------- */
+.attachments { display: grid; gap: 10px; padding: 0 16px 14px; }
+.thumbs { display: flex; flex-wrap: wrap; gap: 8px; }
+.thumbs a { display: block; border: 2px solid #000; box-shadow: 0 0 0 1px #4a4a4a; }
+.thumbs img { display: block; max-width: 220px; max-height: 160px; object-fit: cover; }
+.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #000;
+  background: linear-gradient(180deg, #2f2f2f, #1f1f1f);
+  box-shadow: inset 0 1px 0 #444;
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.file-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-chip small { color: var(--text-3); font-weight: 400; }
+.file-chip:hover { color: var(--green-1); }
+.picker { display: grid; gap: 8px; }
+.picker-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.forum-form label.file-pill { display: inline-flex; cursor: pointer; }
+.file-pill input { display: none; }
+.pick-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pick-list li { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pick-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pick-list li small { color: var(--text-3); }
+.dl-name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0; }
+.dl-name .icon { color: var(--gold); }
+
 /* ---------- avatars + profiles ---------- */
 .avatar {
   flex: none;
@@ -479,6 +612,7 @@ a.name:hover { text-decoration: underline; }
 }
 .avatar.xs { width: 26px; height: 26px; font-size: .75rem; }
 .avatar.sm { width: 30px; height: 30px; font-size: .85rem; }
+.avatar.md { width: 44px; height: 44px; font-size: 1.1rem; }
 .avatar.lg { width: 96px; height: 96px; font-size: 2.4rem; }
 .profile { padding: 18px 16px; display: grid; gap: 14px; }
 .profile-head { display: flex; align-items: center; gap: 16px; }

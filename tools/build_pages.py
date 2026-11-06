@@ -199,7 +199,8 @@ privacy = '''    <section>
           <ul>
             <li>your <strong>email address</strong> (to sign you in, confirm your account and reset your password);</li>
             <li>your <strong>username</strong>, which everyone can see next to your posts;</li>
-            <li>the <strong>threads and replies</strong> you post, which are public;</li>
+            <li>the <strong>threads, replies, files and mod releases</strong> you post, which are public;</li>
+            <li>if you're a Modder: your <strong>profile picture, bio, name colour and link</strong>, which are public;</li>
             <li>if you use <strong>Continue with Google</strong>: the name and email address Google shares with us.
             We don't get your Google password or anything else from your Google account.</li>
           </ul>
@@ -221,8 +222,8 @@ privacy = '''    <section>
 
           <h2 class="prose-h">Your choices</h2>
           <ul>
-            <li>You can delete your own threads and replies at any time.</li>
-            <li>To delete your account and everything linked to it, post in the forum's Help category or ask an admin.
+            <li>You can delete your own threads, replies, files and releases at any time.</li>
+            <li>To delete your account and everything linked to it, post in the forum's General board or ask an admin.
             We'll delete it within 30 days.</li>
             <li>If you signed in with Google, you can also remove our access at
             <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a>.</li>
@@ -274,6 +275,12 @@ terms = f'''    <section>
             <li>No malware.</li>
           </ul>
           <p>You keep the rights to what you post, but you let us show it on the forum. Posts are public.</p>
+
+          <h2 class="prose-h">Files and mods shared by users</h2>
+          <p>Files, mods and links on the forum are shared by users. They are not checked by us before they go up
+          and are not official GeoPrix Moddable releases, unless they come from our Releases page or an Admin post.
+          You download them at your own risk. Only share files you're allowed to share, and never share mods that
+          bypass GeoPrix's limits or paid features.</p>
 
           <h2 class="prose-h">Moderation</h2>
           <p>Admins can edit, lock or delete posts and suspend or delete accounts that break these rules, without
